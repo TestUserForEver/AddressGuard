@@ -45,17 +45,6 @@ Vitalik on Twitter: I almost lost funds to this
 Most scams in Web3 require user mistakes. AddressGuard neutralizes one of the most deceptive ones—without needing user intervention.
 This is a plug-and-play *and forget:) layer of proactive wallet defense, fully aligned with Venn’s block or allow architecture.
 
-📁 Folder Structure
-src/
-├── modules/
-│   └── detection-module/
-│       ├── controller/
-│       ├── service.ts   ← custom logic lives here
-│       ├── dtos/
-├── app.ts
-├── Dockerfile
-
-
 🧪 Example Tests
 
 Legit TX (should not block):
