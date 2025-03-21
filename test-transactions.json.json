@@ -1,0 +1,298 @@
+# Legitimate Transaction 1
+curl -X POST http://localhost:3000/detect \
+-H "Content-Type: application/json" \
+-d '{
+    "chainId": 1,
+    "hash": "0x1111111111111111111111111111111111111111111111111111111111111111",
+    "trace": {
+        "from": "0xa2CAD9BAE0fA90f0c1D991CaEe4A9ea1d0137ad2",
+        "to": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+        "gas": "21000",
+        "gasUsed": "21000",
+        "input": "0x",
+        "pre": {},
+        "post": {}
+    }
+}' | jq .
+
+# Legitimate Transaction 2
+curl -X POST http://localhost:3000/detect \
+-H "Content-Type: application/json" \
+-d '{
+    "chainId": 1,
+    "hash": "0x2222222222222222222222222222222222222222222222222222222222222222",
+    "trace": {
+        "from": "0xa2CAD9BAE0fA90f0c1D991CaEe4A9ea1d0137ad2",
+        "to": "0xfeBd337c8a20A269fF8d7B6BE105bE4a2223962d",
+        "gas": "21000",
+        "gasUsed": "21000",
+        "input": "0x",
+        "pre": {},
+        "post": {}
+    }
+}' | jq .
+
+# Legitimate Transaction 3
+curl -X POST http://localhost:3000/detect \
+-H "Content-Type: application/json" \
+-d '{
+    "chainId": 1,
+    "hash": "0x3333333333333333333333333333333333333333333333333333333333333333",
+    "trace": {
+        "from": "0xa2CAD9BAE0fA90f0c1D991CaEe4A9ea1d0137ad2",
+        "to": "0x35b647DB9b89112D9Bb753d5803439bf75C56092",
+        "gas": "21000",
+        "gasUsed": "21000",
+        "input": "0x",
+        "pre": {},
+        "post": {}
+    }
+}' | jq .
+
+# Legitimate Transaction 4
+curl -X POST http://localhost:3000/detect \
+-H "Content-Type: application/json" \
+-d '{
+    "chainId": 1,
+    "hash": "0x4444444444444444444444444444444444444444444444444444444444444444",
+    "trace": {
+        "from": "0xa2CAD9BAE0fA90f0c1D991CaEe4A9ea1d0137ad2",
+        "to": "0x4A75A46555b3B98E3590e75ce448998312CDE5d1",
+        "gas": "21000",
+        "gasUsed": "21000",
+        "input": "0x",
+        "pre": {},
+        "post": {}
+    }
+}' | jq .
+
+# Legitimate Transaction 5
+curl -X POST http://localhost:3000/detect \
+-H "Content-Type: application/json" \
+-d '{
+    "chainId": 1,
+    "hash": "0x5555555555555555555555555555555555555555555555555555555555555555",
+    "trace": {
+        "from": "0xa2CAD9BAE0fA90f0c1D991CaEe4A9ea1d0137ad2",
+        "to": "0xBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+        "gas": "21000",
+        "gasUsed": "21000",
+        "input": "0x",
+        "pre": {},
+        "post": {}
+    }
+}' | jq .
+
+# False Positive Test 1: First 2 Characters Match
+curl -X POST http://localhost:3000/detect \
+-H "Content-Type: application/json" \
+-d '{
+    "chainId": 1,
+    "hash": "0xBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "trace": {
+        "from": "0xAAB295669a9FD93d5F28D9Ec85E40f4cb697B22A",
+        "to": "0xAAC395669a9FD93d5F28D9Ec85E40f4cb697C33B",
+        "gas": "21000",
+        "gasUsed": "21000",
+        "input": "0x",
+        "pre": {},
+        "post": {}
+    }
+}' | jq .
+
+# False Positive Test 2: First 2 Characters Match
+curl -X POST http://localhost:3000/detect \
+-H "Content-Type: application/json" \
+-d '{
+    "chainId": 1,
+    "hash": "0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "trace": {
+        "from": "0x123A295669a9FD93d5F28D9Ec85E40f4cb697CCC",
+        "to": "0x123B396669a9FD93d5F28D9Ec85E40f4cb697DDD",
+        "gas": "21000",
+        "gasUsed": "21000",
+        "input": "0x",
+        "pre": {},
+        "post": {}
+    }
+}' | jq .
+
+# False Positive Test 3: First 4 Characters Match
+curl -X POST http://localhost:3000/detect \
+-H "Content-Type: application/json" \
+-d '{
+    "chainId": 1,
+    "hash": "0xDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD",
+    "trace": {
+        "from": "0x1A2B3C45669a9FD93d5F28D9Ec85E40f4cb6DE78",
+        "to": "0x1A2B4D55669a9FD93d5F28D9Ec85E40f4cb6DE99",
+        "gas": "21000",
+        "gasUsed": "21000",
+        "input": "0x",
+        "pre": {},
+        "post": {}
+    }
+}' | jq .
+
+
+
+
+
+
+
+
+
+
+
+# Poisoned Transaction 1 (One-Character Middle Modification)
+curl -X POST http://localhost:3000/detect \
+-H "Content-Type: application/json" \
+-d '{
+    "chainId": 1,
+    "hash": "0xabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcd",
+    "trace": {
+        "from": "0xa2CAD9BAE0fA90f0c1D991CaEe4A9ea1d0137ad2",
+        "to": "0xa2CAD9BAE0fA90f0c1D991CaEe4A9ea1d0137bd2",
+        "gas": "21000",
+        "gasUsed": "21000",
+        "input": "0x",
+        "pre": {},
+        "post": {}
+    }
+}' | jq .
+
+# Poisoned Transaction 2: Two-Character Change in Middle
+curl -X POST http://localhost:3000/detect \
+-H "Content-Type: application/json" \
+-d '{
+    "chainId": 1,
+    "hash": "0x2222222222222222222222222222222222222222222222222222222222222222",
+    "trace": {
+        "from": "0xC1D2E3F4A5B678901234567890ABCDEF12345678",
+        "to": "0xC1D2E3F4A5B678901234567890ABCDEE12345678",
+        "gas": "21000",
+        "gasUsed": "21000",
+        "input": "0x",
+        "pre": {},
+        "post": {}
+    }
+}' | jq .
+
+# Poisoned Transaction 3: Last Few Characters Changed
+curl -X POST http://localhost:3000/detect \
+-H "Content-Type: application/json" \
+-d '{
+    "chainId": 1,
+    "hash": "0x3333333333333333333333333333333333333333333333333333333333333333",
+    "trace": {
+        "from": "0xa2CAD9BAE0fA90f0c1D991CaEe4A9ea1d0137ad2",
+        "to": "0xa2CAD9BAE0fA90f0c1D991CaEe4A9ea1d0137af2",
+        "gas": "21000",
+        "gasUsed": "21000",
+        "input": "0x",
+        "pre": {},
+        "post": {}
+    }
+}' | jq .
+
+# Poisoned Transaction 4 (First and Last Match, Middle is Different)
+curl -X POST http://localhost:3000/detect \
+-H "Content-Type: application/json" \
+-d '{
+    "chainId": 1,
+    "hash": "0x4444444444444444444444444444444444444444444444444444444444444444",
+    "trace": {
+        "from": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+        "to": "0x742d35Cc6634C0532925a3b844Bc454e4438f55e",
+        "gas": "21000",
+        "gasUsed": "21000",
+        "input": "0x",
+        "pre": {},
+        "post": {}
+    }
+}' | jq .
+
+# Poisoned Transaction 5: Single Character Flip in the Middle
+curl -X POST http://localhost:3000/detect \
+-H "Content-Type: application/json" \
+-d '{
+    "chainId": 1,
+    "hash": "0x5555555555555555555555555555555555555555555555555555555555555555",
+    "trace": {
+        "from": "0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe",
+        "to": "0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BFe",
+        "gas": "21000",
+        "gasUsed": "21000",
+        "input": "0x",
+        "pre": {},
+        "post": {}
+    }
+}' | jq .
+
+# Poisoned Transaction 6: Extra Characters in the Middle
+curl -X POST http://localhost:3000/detect \
+-H "Content-Type: application/json" \
+-d '{
+    "chainId": 1,
+    "hash": "0x6666666666666666666666666666666666666666666666666666666666666666",
+    "trace": {
+        "from": "0x5A52E96BAcDAc19bDDe30cB10209Af2F5bC2250F",
+        "to": "0x5A52E96BAbDAc19bDDe30cB10209Af2F5bC2250F",
+        "gas": "21000",
+        "gasUsed": "21000",
+        "input": "0x",
+        "pre": {},
+        "post": {}
+    }
+}' | jq .
+
+# Poisoned Transaction 7: Reversed Characters in the Middle
+curl -X POST http://localhost:3000/detect \
+-H "Content-Type: application/json" \
+-d '{
+    "chainId": 1,
+    "hash": "0x7777777777777777777777777777777777777777777777777777777777777777",
+    "trace": {
+        "from": "0x742d35Cc6634C0532925a3b844Bc454e4438f44e",
+        "to": "0x742d35Cc6634C0532925a3b844Bc454e4438f54e",
+        "gas": "21000",
+        "gasUsed": "21000",
+        "input": "0x",
+        "pre": {},
+        "post": {}
+    }
+}' | jq .
+
+# Poisoned Transaction 8: First 3 & Last 3 Characters Match
+curl -X POST http://localhost:3000/detect \
+-H "Content-Type: application/json" \
+-d '{
+    "chainId": 1,
+    "hash": "0x9999999999999999999999999999999999999999999999999999999999999999",
+    "trace": {
+        "from": "0x123A295669a9FD93d5F28D9Ec85E40f4cb697CCC",
+        "to": "0x123B295669a9FD93d5F28D9Ec85E40f4cb697CCC",
+        "gas": "21000",
+        "gasUsed": "21000",
+        "input": "0x",
+        "pre": {},
+        "post": {}
+    }
+}' | jq .
+
+# Poisoned Transaction 9: First 4 & Last 4 Characters Match
+curl -X POST http://localhost:3000/detect \
+-H "Content-Type: application/json" \
+-d '{
+    "chainId": 1,
+    "hash": "0xAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "trace": {
+        "from": "0x1A2B3C45669a9FD93d5F28D9Ec85E40f4cb6DE78",
+        "to": "0x1A2B3D45669a9FD93d5F28D9Ec85E40f4cb6DE78",
+        "gas": "21000",
+        "gasUsed": "21000",
+        "input": "0x",
+        "pre": {},
+        "post": {}
+    }
+}' | jq .
